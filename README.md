@@ -20,7 +20,7 @@ Example hiera config:
     
     ccfe::menus:
       menu:
-        title: 'Operations Menu'
+        description: 'Main Menu'
         items:
           user_services:
             description: 'User Services'
@@ -29,7 +29,7 @@ Example hiera config:
             description:  'System Services'
             action: 'run:/sbin/service --status-all'
       services:
-        title: 'Logscape'
+        description: 'Logscape'
         group: 'logscape'
 
     ccfe::items:

@@ -1,10 +1,10 @@
-ccfe::filestore:    'puppet:///files/ccfe',
+ccfe::filestore:    'puppet:///files/ccfe'
 ccfe::package_file: 'ccfe-1.57-1.noarch.rpm'
 ccfe::menu_wrapper: 'true'
 
 ccfe::menus:
-  ccfe:
-    title: 'Operations Menu'
+  menu:
+    description: 'Operations Menu'
     items:
       user_services:
         description: 'User Services'
@@ -19,12 +19,17 @@ ccfe::menus:
         description: 'Network Time Synchronisation'
         action: 'run:/usr/bin/ntpstat && /usr/sbin/ntpq -p'
   services:
-    title: 'services'
+    description: 'User Services'
   logscape1:
-    title: 'logscape1'
+    description: 'Logscape'
     group: 'logscape'
 
 ccfe::items:
+  logscape1:
+    parent: 'services'
+    group: 'logscape'
+    description: 'logscape1 user'
+    action: 'menu:logscape1'
   01_logscape_taillogfile:
     parent: 'logscape1'
     group: 'logscape'
@@ -43,16 +48,16 @@ ccfe::items:
   04_logscape_restart:
     parent: 'logscape1'
     group: 'logscape'
-    description: 'logscape service: status'
-    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+    description: 'logscape service: restart'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 restart logscape'
   05_logscape_stop:
     parent: 'logscape1'
     group: 'logscape'
-    description: 'logscape service: status'
-    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+    description: 'logscape service: stop'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stop logscape'
   06_logscape_start:
     parent: 'logscape1'
     group: 'logscape'
-    description: 'logscape service: status'
-    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+    description: 'logscape service: start'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 start logscape'
 
