@@ -11,6 +11,15 @@ define ccfe::menu (
     owner  => $user,
     group  => $group,
   }
-  $defaults = {}
+  file { "${basedir}/${id}.menu/definition":
+    ensure  => present,
+    owner   => $user,
+    group   => $group,
+    content => template('ccfe/definition.erb'),
+    require => File["${basedir}/${id}.menu"],
+  }
+  $defaults = {
+    parent => $id,
+  }
   create_resources('ccfe::item', $items, $defaults)
 }
