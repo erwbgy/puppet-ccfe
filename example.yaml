@@ -8,16 +8,16 @@ ccfe::menus:
     items:
       user_services:
         description: 'User Services'
-        menu: 'services'
+        action: 'menu:services'
       system_services:
         description:  'System Services'
-        run: '/sbin/service --status-all'
+        action: 'run:/sbin/service --status-all'
       sysmon:
         description: 'System Monitoring'
-        menu: 'sysmon'
+        action: 'menu:sysmon'
       ntp:
         description: 'Network Time Synchronisation'
-        run: '/usr/bin/ntpstat && /usr/sbin/ntpq -p'
+        action: 'run:/usr/bin/ntpstat && /usr/sbin/ntpq -p'
   services:
     title: 'services'
   logscape1:
@@ -29,30 +29,30 @@ ccfe::items:
     parent: 'logscape1'
     group: 'logscape'
     description: 'logscape service: tail log file'
-    run: '/usr/bin/sudo -Hi -u logscape1 /usr/bin/tail -n 100 -f ~logscape1/logs/logscape/current'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /usr/bin/tail -n 100 -f ~logscape1/logs/logscape/current'
   02 logscape_viewlogfile:
     parent: 'logscape1'
     group: 'logscape'
     description: 'logscape service: view log file'
-    run: '/usr/bin/sudo -Hi -u logscape1 /usr/bin/less -F ~logscape1/logs/logscape/current'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /usr/bin/less -F ~logscape1/logs/logscape/current'
   03_logscape_status:
     parent: 'logscape1'
     group: 'logscape'
     description: 'logscape service: status'
-    run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
   04_logscape_restart:
     parent: 'logscape1'
     group: 'logscape'
     description: 'logscape service: status'
-    run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
   05_logscape_stop:
     parent: 'logscape1'
     group: 'logscape'
     description: 'logscape service: status'
-    run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
   06_logscape_start:
     parent: 'logscape1'
     group: 'logscape'
     description: 'logscape service: status'
-    run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
 
