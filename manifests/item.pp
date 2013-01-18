@@ -12,5 +12,5 @@ define ccfe::item (
     owner   => $user,
     group   => $group,
     content => 'template:///item.erb',
-  } 
+  }
 }

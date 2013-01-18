@@ -11,5 +11,6 @@ define ccfe::menu (
     owner  => $user,
     group  => $group,
   }
+  $defaults = {}
   create_resources('ccfe::item', $items, $defaults)
 }
