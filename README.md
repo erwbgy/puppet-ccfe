@@ -8,7 +8,7 @@ Currently only tested on Redhat-like systems.
 ## Usage
 
 The recommended usage is to place the configuration in a hiera config file and
-just include the runit module in your puppet configuration:
+just include the ccfe module in your puppet configuration:
 
     include ccfe
 
