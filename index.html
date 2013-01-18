@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Puppet-ccfe : Create Curses Command Front-end (CCFE) menus" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Puppet-ccfe</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/erwbgy/puppet-ccfe">View on GitHub</a>
+
+          <h1 id="project_title">Puppet-ccfe</h1>
+          <h2 id="project_tagline">Create Curses Command Front-end (CCFE) menus</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/erwbgy/puppet-ccfe/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/erwbgy/puppet-ccfe/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>puppet-ccfe</h1>
+
+<p>Puppet module for creating menus and menu items using the Curses Command
+Front-end (CCFE) menu system - <a href="http://cfe.altervista.org/en/">http://cfe.altervista.org/en/</a></p>
+
+<p>Currently only tested on Redhat-like systems.</p>
+
+<h2>Usage</h2>
+
+<p>The recommended usage is to place the configuration in a hiera config file and
+just include the runit module in your puppet configuration:</p>
+
+<pre><code>include ccfe
+</code></pre>
+
+<p>Example hiera config:</p>
+
+<pre><code>ccfe::filestore:    'puppet:///files/ccfe',
+ccfe::package_file: 'ccfe-1.57-1.noarch.rpm'
+ccfe::menu_wrapper: 'true'
+
+ccfe::menus:
+  menu:
+    description: 'Main Menu'
+    items:
+      user_services:
+        description: 'User Services'
+        action: 'menu:services'
+      system_services:
+        description:  'System Services'
+        action: 'run:/sbin/service --status-all'
+  services:
+    description: 'Logscape'
+    group: 'logscape'
+
+ccfe::items:
+  01_logscape_taillogfile:
+    parent: 'services'
+    group: 'logscape'
+    description: 'logscape service: tail log file'
+    action: 'run:/usr/bin/sudo -Hi -u logscape /usr/bin/tail -n 100 -f ~logscape/logs/logscape/current'
+  02_logscape_status:
+    parent: 'services'
+    group: 'logscape'
+    description: 'logscape service: status'
+    action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
+  03_logscape_restart:
+    parent: 'services'
+    group: 'logscape'
+    description: 'logscape service: status'
+    action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
+</code></pre>
+
+<p>This example does the following:</p>
+
+<ul>
+<li><p>Creates a '/usr/bin/menu' wrapper script that calls '/usr/bin/ccfe menu' to
+display the menu called 'menu'</p></li>
+<li><p>Creates a menu called 'menu' with a 'User Services' entry and a 'System Services' entry</p></li>
+<li><p>Selecting the 'System Services' entry executes '/sbin/service' to show the status of system services</p></li>
+<li><p>Selecting the 'User Services' entry calls another menu called 'services'</p></li>
+<li><p>The 'services' menu has three items and selecting each of these runs a command</p></li>
+</ul><p>If the contents of the menu is known beforehand then it can be constructed
+completely using the ccfe::menus configuration in hiera or calling the
+ccfe::menus parameterised class with an appropriate config parameter hash.</p>
+
+<p>To dynamically add menu items the ccfe::items configuration in hiera or
+ccfe::items parameterised class can be used. The menus themselves must already
+have been created using ccfe::menus though.</p>
+
+<p>If menu_wrapper is set to true, which it is by default, then your top-level
+menu should be called 'menu' and will be displayed when the '/usr/bin/menu'
+command is executed.</p>
+
+<h2>ccfe</h2>
+
+<p><em>basedir</em>: The base directory under which menus are created. Default: '/usr/lib/ccfe/ccfe'</p>
+
+<p><em>filestore</em>: The Puppet Master file store location where the CCFE package file
+is located. Default: 'puppet:///files/ccfe'</p>
+
+<p><em>package_file</em>: The CCFE package filename. Default: 'ccfe-1.57-1.noarch.rpm'</p>
+
+<p><em>menu_wrapper</em>: Whether or not to create the '/usr/bin/menu' wrapper script so
+users can just type 'menu'. Default: true</p>
+
+<p><em>workspace</em>: The directory on the Puppet agent host that is used to store the
+package file before it is installed. Default: '/root/ccfe'</p>
+
+<h2>ccfe::menus</h2>
+
+<p>Class that creates ccfe::menu resources from a ccfe::menus hash in hiera or the
+config parameter.</p>
+
+<h2>ccfe::menu</h2>
+
+<p><em>title</em>: The unique menu id.</p>
+
+<p><em>description</em>: The title that will be displayed above the menu.  Default: $title</p>
+
+<p><em>user</em>: The user that the menu files will be owned by. Default: 'root'</p>
+
+<p><em>group</em>: The group that the menu files will be owned by. Defaukt: 'root'</p>
+
+<p><em>items</em>: A hash of ccfe::item resources to create under this menu. Default: {}</p>
+
+<h2>ccfe::items</h2>
+
+<p>Class that creates ccfe::item resources from a ccfe::menus hash in hiera or the
+config parameter.</p>
+
+<h2>ccfe::item</h2>
+
+<p><em>title</em>: The unique menu item id</p>
+
+<p><em>parent</em>: The parent menu that this item is part of. Required.</p>
+
+<p><em>action</em>: The action to take when this meny item is selected.  Can be either 'menu:[menu name]' to select another menu or 'run:[command]' to execute a command. Required.</p>
+
+<p><em>user</em>: The user that the menu files will be owned by. Default: 'root'</p>
+
+<p><em>group</em>: The group that the menu files will be owned by. Defaukt: 'root'</p>
+
+<p><em>description</em>: The menu item description that is displayed.  Default: $title</p>
+
+<h2>Notes</h2>
+
+<p>Not all CCFE functionality is supported and in particular support for forms in
+missing.</p>
+
+<h2>Support</h2>
+
+<p>License: Apache License, Version 2.0</p>
+
+<p>GitHub URL: <a href="https://github.com/erwbgy/puppet-ccfe">https://github.com/erwbgy/puppet-ccfe</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Puppet-ccfe maintained by <a href="https://github.com/erwbgy">erwbgy</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-37513727-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
