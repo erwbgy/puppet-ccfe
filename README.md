@@ -51,16 +51,18 @@ Example hiera config:
 
 This example does the following:
 
-* Creates a '/usr/bin/menu' wrapper script that calls '/usr/bin/ccfe menu' to
-  display the menu called 'menu'
+* Creates a */usr/bin/menu* wrapper script that calls */usr/bin/ccfe menu* to
+  display the menu called *menu*
 
-* Creates a menu called 'menu' with a 'User Services' entry and a 'System Services' entry
+* Creates a menu called *menu* with a *User Services* entry and a *System Services* entry
 
-* Selecting the 'System Services' entry executes '/sbin/service' to show the status of system services
+* Selecting the *System Services* entry executes */sbin/service* to show the status of system services
 
-* Selecting the 'User Services' entry calls another menu called 'services'
+* Selecting the *User Services* entry calls another menu called *services*
 
-* The 'services' menu has three items and selecting each of these runs a command
+* For members of the *logscape* group (and the owner *root*) the *services*
+  menu has three items and selecting each of these runs a command.  Non-members
+  will not see these menu items.
 
 If the contents of the menu is known beforehand then it can be constructed
 completely using the ccfe::menus configuration in hiera or calling the
@@ -71,23 +73,32 @@ ccfe::items parameterised class can be used. The menus themselves must already
 have been created using ccfe::menus though.
 
 If menu_wrapper is set to true, which it is by default, then your top-level
-menu should be called 'menu' and will be displayed when the '/usr/bin/menu'
+menu should be called *menu* and will be displayed when the */usr/bin/menu*
 command is executed.
+
+If the group parameter is passed when creating a menu then only members of that
+group (and the owner - usually root) will be able to access the menu.  Any menu
+items under this menu will have the same restrictions.
+
+If the group parameter is passed when creating a menu item then only members of
+that group (and the owner - usually root) will see that item on the menu.  This
+can be used to provide additional menu items to a certain group while hiding
+them from others.
 
 ## ccfe
 
-*basedir*: The base directory under which menus are created. Default: '/usr/lib/ccfe/ccfe'
+*basedir*: The base directory under which menus are created. Default: */usr/lib/ccfe/ccfe*
 
 *filestore*: The Puppet Master file store location where the CCFE package file
-is located. Default: 'puppet:///files/ccfe'
+is located. Default: *puppet:///files/ccfe*
 
-*package_file*: The CCFE package filename. Default: 'ccfe-1.57-1.noarch.rpm'
+*package_file*: The CCFE package filename. Default: *ccfe-1.57-1.noarch.rpm*
 
-*menu_wrapper*: Whether or not to create the '/usr/bin/menu' wrapper script so
-users can just type 'menu'. Default: true
+*menu_wrapper*: Whether or not to create the */usr/bin/menu* wrapper script so
+users can just type *menu*. Default: true
 
 *workspace*: The directory on the Puppet agent host that is used to store the
-package file before it is installed. Default: '/root/ccfe'
+package file before it is installed. Default: */root/ccfe*
 
 ## ccfe::menus
 
@@ -100,9 +111,9 @@ config parameter.
 
 *description*: The title that will be displayed above the menu.  Default: $title
 
-*user*: The user that the menu files will be owned by. Default: 'root'
+*user*: The user that the menu files will be owned by. Default: *root*
 
-*group*: The group that the menu files will be owned by. Defaukt: 'root'
+*group*: The group that the menu files will be owned by. Default: *root*
 
 *items*: A hash of ccfe::item resources to create under this menu. Default: {}
 
@@ -117,11 +128,11 @@ config parameter.
 
 *parent*: The parent menu that this item is part of. Required.
 
-*action*: The action to take when this meny item is selected.  Can be either 'menu:[menu name]' to select another menu or 'run:[command]' to execute a command. Required.
+*action*: The action to take when this meny item is selected.  Can be either *menu:[menu name]* to select another menu or *run:[command]* to execute a command. Required.
 
-*user*: The user that the menu files will be owned by. Default: 'root'
+*user*: The user that the menu files will be owned by. Default: *root*
 
-*group*: The group that the menu files will be owned by. Defaukt: 'root'
+*group*: The group that the menu files will be owned by. Defaukt: *root*
 
 *description*: The menu item description that is displayed.  Default: $title
 
