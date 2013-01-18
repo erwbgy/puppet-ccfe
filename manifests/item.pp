@@ -11,6 +11,7 @@ define ccfe::item (
     ensure  => present,
     owner   => $user,
     group   => $group,
-    content => 'template:///item.erb',
+    content => template('ccfe/item.erb'),
+    require => File["${basedir}/${parent}.menu"],
   }
 }
