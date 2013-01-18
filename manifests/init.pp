@@ -1,4 +1,5 @@
 class ccfe (
+  $basedir      = '/usr/lib/ccfe/ccfe',
   $config       = {},
   $filestore    = 'puppet:///files/ccfe',
   $package_file = 'ccfe-1.57-1.noarch.rpm',
@@ -22,7 +23,7 @@ class ccfe (
     file { '/usr/bin/menu':
       ensure  => present,
       mode    => '0755',
-      content => "#!/bin/bash\nexec /usr/bin/ccfe \"$@\"\n",
+      content => "#!/bin/bash\nexec /usr/bin/ccfe menu\n",
       replace => false,
     }
   }
