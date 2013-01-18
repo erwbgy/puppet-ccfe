@@ -1,0 +1,56 @@
+ccfe::menu_wrapper: 'true'
+
+ccfe::menus:
+  ccfe:
+    title: 'Operations Menu'
+    items:
+      - user_services:
+          description: 'User Services'
+          menu: 'services'
+      - system_services:
+          description:  'System Services'
+          run: '/sbin/service --status-all'
+      - sysmon:
+          description: 'System Monitoring'
+          menu: 'sysmon'
+      - ntp:
+          description: 'Network Time Synchronisation'
+          run: '/usr/bin/ntpstat && /usr/sbin/ntpq -p'
+  services:
+    title: 'services'
+  logscape1:
+    title: 'logscape1'
+    group: 'logscape'
+
+ccfe::menu_items:
+  - logscape_taillogfile:
+      parent: 'logscape1'
+      group: 'logscape'
+      description: 'logscape service: tail log file'
+      run: '/usr/bin/sudo -Hi -u logscape1 /usr/bin/tail -n 100 -f ~logscape1/logs/logscape/current'
+  - logscape_viewlogfile:
+      parent: 'logscape1'
+      group: 'logscape'
+      description: 'logscape service: view log file'
+      run: '/usr/bin/sudo -Hi -u logscape1 /usr/bin/less -F ~logscape1/logs/logscape/current'
+  - logscape_status:
+      parent: 'logscape1'
+      group: 'logscape'
+      description: 'logscape service: status'
+      run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+  - logscape_restart:
+      parent: 'logscape1'
+      group: 'logscape'
+      description: 'logscape service: status'
+      run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+  - logscape_stop:
+      parent: 'logscape1'
+      group: 'logscape'
+      description: 'logscape service: status'
+      run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+  - logscape_start:
+      parent: 'logscape1'
+      group: 'logscape'
+      description: 'logscape service: status'
+      run: '/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
+  
