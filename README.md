@@ -62,7 +62,7 @@ This example does the following:
 
 * For members of the *logscape* group (and the owner *root*) the *services*
   menu has three items and selecting each of these runs a command.  Non-members
-  will not see these menu items.
+  will not be able to access this menu.
 
 If the contents of the menu is known beforehand then it can be constructed
 completely using the ccfe::menus configuration in hiera or calling the
@@ -77,13 +77,7 @@ menu should be called *menu* and will be displayed when the */usr/bin/menu*
 command is executed.
 
 If the group parameter is passed when creating a menu then only members of that
-group (and the owner - usually root) will be able to access the menu.  Any menu
-items under this menu will have the same restrictions.
-
-If the group parameter is passed when creating a menu item then only members of
-that group (and the owner - usually root) will see that item on the menu.  This
-can be used to provide additional menu items to a certain group while hiding
-them from others.
+group (and the owner - usually root) will be able to access the menu.
 
 ## ccfe
 
@@ -129,10 +123,6 @@ config parameter.
 *parent*: The parent menu that this item is part of. Required.
 
 *action*: The action to take when this meny item is selected.  Can be either *menu:[menu name]* to select another menu or *run:[command]* to execute a command. Required.
-
-*user*: The user that the menu files will be owned by. Default: *root*
-
-*group*: The group that the menu files will be owned by. Defaukt: *root*
 
 *description*: The menu item description that is displayed.  Default: $title
 

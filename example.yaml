@@ -27,37 +27,30 @@ ccfe::menus:
 ccfe::items:
   logscape1:
     parent: 'services'
-    group: 'logscape'
     description: 'logscape1 user'
     action: 'menu:logscape1'
   01_logscape_taillogfile:
     parent: 'logscape1'
-    group: 'logscape'
     description: 'logscape service: tail log file'
     action: 'run:/usr/bin/sudo -Hi -u logscape1 /usr/bin/tail -n 100 -f ~logscape1/logs/logscape/current'
   02 logscape_viewlogfile:
     parent: 'logscape1'
-    group: 'logscape'
     description: 'logscape service: view log file'
     action: 'run:/usr/bin/sudo -Hi -u logscape1 /usr/bin/less -F ~logscape1/logs/logscape/current'
   03_logscape_status:
     parent: 'logscape1'
-    group: 'logscape'
     description: 'logscape service: status'
     action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stat logscape'
   04_logscape_restart:
     parent: 'logscape1'
-    group: 'logscape'
     description: 'logscape service: restart'
     action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 restart logscape'
   05_logscape_stop:
     parent: 'logscape1'
-    group: 'logscape'
     description: 'logscape service: stop'
     action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stop logscape'
   06_logscape_start:
     parent: 'logscape1'
-    group: 'logscape'
     description: 'logscape service: start'
     action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 start logscape'
 

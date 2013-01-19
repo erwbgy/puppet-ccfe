@@ -1,9 +1,9 @@
 0.1.1:
 
-* When a non-default group is set on a menu or menu item then ensure that the
-permissions of files and directories are such that only user and group are
-allowed access.  This prevents access to menus or menu items not to show for
-users who are not members of the specified group.
+* When a non-default group is set on a menu then ensure that the permissions
+of files and directories are such that only the specified user and group are
+allowed access.  This prevents access to menus by users who are not members of
+the specified group.
 
 0.1.0:
 
