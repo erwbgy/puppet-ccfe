@@ -35,17 +35,14 @@ Example hiera config:
     ccfe::items:
       01_logscape_taillogfile:
         parent: 'services'
-        group: 'logscape'
         description: 'logscape service: tail log file'
         action: 'run:/usr/bin/sudo -Hi -u logscape /usr/bin/tail -n 100 -f ~logscape/logs/logscape/current'
       02_logscape_status:
         parent: 'services'
-        group: 'logscape'
         description: 'logscape service: status'
         action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
       03_logscape_restart:
         parent: 'services'
-        group: 'logscape'
         description: 'logscape service: status'
         action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
 
