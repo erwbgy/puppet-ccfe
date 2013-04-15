@@ -1,5 +1,5 @@
 name    'erwbgy-ccfe'
-version '0.1.1'
+version '0.1.2'
 source 'https://github.com/erwbgy/puppet-ccfe'
 author 'erwbgy'
 license 'Apache License, Version 2.0'

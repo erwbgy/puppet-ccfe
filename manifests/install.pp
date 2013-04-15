@@ -14,10 +14,13 @@ class ccfe::install (
     path    => "${workspace}/${package_file}",
     source  => "${filestore}/${package_file}",
   }
+  package { 'perl-Curses':
+    ensure   => installed,
+  }
   package { 'ccfe':
     ensure   => installed,
     provider => 'rpm',
     source   => "${workspace}/${package_file}",
-    require  => File['ccfe-rpm'],
+    require  => [ File['ccfe-rpm'], Package['perl-Curses'] ],
   }
 }
