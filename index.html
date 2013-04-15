@@ -77,8 +77,8 @@ ccfe::items:
     action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
   03_logscape_restart:
     parent: 'services'
-    description: 'logscape service: status'
-    action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
+    description: 'logscape service: restart'
+    action: 'run(confirm):/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 restart logscape'
 </code></pre>
 
 <p>This example does the following:</p>
@@ -92,6 +92,7 @@ display the menu called <em>menu</em></p></li>
 <li><p>For members of the <em>logscape</em> group (and the owner <em>root</em>) the <em>services</em>
 menu has three items and selecting each of these runs a command.  Non-members
 will not be able to access this menu.</p></li>
+<li><p>Selecting the restart menu item pops up a confirmation dialog before the command is executed.</p></li>
 </ul><p>If the contents of the menu is known beforehand then it can be constructed
 completely using the ccfe::menus configuration in hiera or calling the
 ccfe::menus parameterised class with an appropriate config parameter hash.</p>
@@ -158,6 +159,9 @@ config parameter.</p>
 
 <p>Not all CCFE functionality is supported and in particular support for forms in
 missing.</p>
+
+<p>The EPEL repository must be enabled so that the required perl-Curses dependency
+can be installed.</p>
 
 <h2>Support</h2>
 
