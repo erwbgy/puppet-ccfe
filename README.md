@@ -128,6 +128,9 @@ config parameter.
 Not all CCFE functionality is supported and in particular support for forms in
 missing.
 
+The EPEL repository must be enabled so that the required perl-Curses dependency
+can be installed.
+
 ## Support
 
 License: Apache License, Version 2.0
