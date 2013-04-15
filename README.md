@@ -43,8 +43,8 @@ Example hiera config:
         action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
       03_logscape_restart:
         parent: 'services'
-        description: 'logscape service: status'
-        action: 'run:/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 stat logscape'
+        description: 'logscape service: restart'
+        action: 'run(confirm):/usr/bin/sudo -Hi -u logscape /sbin/sv -w60 restart logscape'
 
 This example does the following:
 
@@ -60,6 +60,8 @@ This example does the following:
 * For members of the *logscape* group (and the owner *root*) the *services*
   menu has three items and selecting each of these runs a command.  Non-members
   will not be able to access this menu.
+
+* Selecting the restart menu item pops up a confirmation dialog before the command is executed.
 
 If the contents of the menu is known beforehand then it can be constructed
 completely using the ccfe::menus configuration in hiera or calling the

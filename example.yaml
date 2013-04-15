@@ -44,13 +44,13 @@ ccfe::items:
   04_logscape_restart:
     parent: 'logscape1'
     description: 'logscape service: restart'
-    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 restart logscape'
+    action: 'run(confirm):/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 restart logscape'
   05_logscape_stop:
     parent: 'logscape1'
     description: 'logscape service: stop'
-    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stop logscape'
+    action: 'run(confirm):/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 stop logscape'
   06_logscape_start:
     parent: 'logscape1'
     description: 'logscape service: start'
-    action: 'run:/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 start logscape'
+    action: 'run(confirm):/usr/bin/sudo -Hi -u logscape1 /sbin/sv -w60 start logscape'
 
