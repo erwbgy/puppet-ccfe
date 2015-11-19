@@ -1,3 +1,7 @@
+# _Unmaintained_
+
+I no longer use Puppet actively and this software has not been maintained for some time.
+
 # puppet-ccfe
 
 Puppet module for creating menus and menu items using the Curses Command
